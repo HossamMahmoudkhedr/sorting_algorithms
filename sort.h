@@ -1,5 +1,6 @@
 #ifndef SORTING_ALGORITHMS
 #define SORTING_ALGORITHMS
+#include <stdio.h>
 /**
  * struct listint_s - Doubly linked list node
  *
