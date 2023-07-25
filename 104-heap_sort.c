@@ -89,7 +89,7 @@ void heap_sort(int *array, size_t size)
 	}
 }
 
-#define TEST
+/*#define TEST*/
 
 #ifdef TEST
 /**

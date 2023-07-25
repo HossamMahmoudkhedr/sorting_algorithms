@@ -55,7 +55,7 @@ void shell_sort(int *array, size_t size)
 	free(arr);
 }
 
-#define TEST
+/*#define TEST*/
 
 #ifdef TEST
 /**
