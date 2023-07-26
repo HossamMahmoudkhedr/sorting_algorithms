@@ -61,14 +61,15 @@ void merge(int *array, size_t size, size_t offset, size_t sect_size, bool printe
 	}
 	else
 	{
-		size_t i;
+		/*size_t i;*/
 
 		sect_size >>= 1;
 		merge(array, size, offset, sect_size, printed);
 		merge(array, size, offset + (sect_size), sect_size, printed);
 
-		/*MISSING INTERMEDIATE RESULT MERGING*/
+		/*MISSING INTERMEDIATE RESULT MERGING* /
 		for (i = 0; i < (sect_size); i++)
+		{
 			if (
 				((offset / (sect_size)) % 2 == 0)?
 				(array[offset + i + (sect_size)] < array[offset + i]):
@@ -76,10 +77,12 @@ void merge(int *array, size_t size, size_t offset, size_t sect_size, bool printe
 			)
 			{
 				swap(array + offset + i, array + offset + i + (sect_size));
-				merge(array, size, offset + i, sect_size, false);
-				merge(array, size, offset + i + (sect_size), sect_size, false);
 			}
-		/*END MISSING*/
+			merge(array, size, offset + i, sect_size, false);
+			merge(array, size, offset + i + (sect_size), sect_size, false);
+		}
+		/ *END MISSING*/
+
 		if (printed)
 			printf("Result [%ld/%ld] (%s):\n", (sect_size << 1), size,
 				((offset / (sect_size << 1)) % 2 == 0) ? "UP" : "DOWN"),
@@ -105,7 +108,7 @@ void bitonic_sort(int *array, size_t size)
 }
 /**/
 
-#define TEST
+/*#define TEST*/
 
 #ifdef TEST
 /**
