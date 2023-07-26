@@ -35,10 +35,12 @@ size_t *knuth_seq(size_t size)
  */
 void shell_sort(int *array, size_t size)
 {
-	size_t i, j, gap, *arr = knuth_seq(size), *gaps;
+	size_t i, j, gap, *arr, *gaps;
 	int temp;
 
-	gaps = arr;
+	if (array == NULL || size < 2)
+		return;
+	gaps = arr = knuth_seq(size);
 	/*** Credits for pseudocode goes to the wikipedia page writer ***/
 
 	for (gap = *gaps; gap != 0; gap = *(++gaps))

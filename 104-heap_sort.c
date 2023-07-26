@@ -79,6 +79,8 @@ void heap_sort(int *array, size_t size)
 {
 	size_t end = size - 1;
 
+	if (array == NULL || size < 2)
+		return;
 	buildMaxHeap(array, size);
 	while (end)
 	{
