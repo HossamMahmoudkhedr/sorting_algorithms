@@ -37,8 +37,17 @@ void bitonic_sort_norec(int *array, size_t size)
 			}
 }
 
-/**/
-void merge(int *array, size_t size, size_t offset, size_t sect_size, bool printed)
+/**
+ * comparision_merge - performs a recursive sequence of comparisons and merges
+ *
+ * @array: the input array of numbers
+ * @size: the size of the input
+ * @offset: the offset of the sub-array
+ * @sect_size: the size of the sub-array section
+ * @printed: an option to print the intermediate results or not
+ */
+void comparision_merge(int *array, size_t size, size_t offset,
+	size_t sect_size, bool printed)
 {
 	if (printed)
 		printf("Merging [%ld/%ld] (%s):\n", sect_size, size,
@@ -47,8 +56,8 @@ void merge(int *array, size_t size, size_t offset, size_t sect_size, bool printe
 	if (sect_size == 2)
 	{
 		if (
-			((offset / sect_size) % 2 == 0)?
-			(array[offset + 1 /*(sect_size >> 1)*/] < array[offset]):
+			((offset / sect_size) % 2 == 0) ?
+			(array[offset + 1 /*(sect_size >> 1)*/] < array[offset]) :
 			(array[offset + 1 /*(sect_size >> 1)*/] > array[offset])
 		)
 		{
@@ -64,24 +73,10 @@ void merge(int *array, size_t size, size_t offset, size_t sect_size, bool printe
 		/*size_t i;*/
 
 		sect_size >>= 1;
-		merge(array, size, offset, sect_size, printed);
-		merge(array, size, offset + (sect_size), sect_size, printed);
+		comparision_merge(array, size, offset, sect_size, printed);
+		comparision_merge(array, size, offset + (sect_size), sect_size, printed);
 
-		/*MISSING INTERMEDIATE RESULT MERGING* /
-		for (i = 0; i < (sect_size); i++)
-		{
-			if (
-				((offset / (sect_size)) % 2 == 0)?
-				(array[offset + i + (sect_size)] < array[offset + i]):
-				(array[offset + i + (sect_size)] > array[offset + i])
-			)
-			{
-				swap(array + offset + i, array + offset + i + (sect_size));
-			}
-			merge(array, size, offset + i, sect_size, false);
-			merge(array, size, offset + i + (sect_size), sect_size, false);
-		}
-		/ *END MISSING*/
+		/*MISSING INTERMEDIATE RESULT MERGING*/
 
 		if (printed)
 			printf("Result [%ld/%ld] (%s):\n", (sect_size << 1), size,
@@ -100,11 +95,9 @@ void merge(int *array, size_t size, size_t offset, size_t sect_size, bool printe
 /**/
 void bitonic_sort(int *array, size_t size)
 {
-	merge(array, size, 0, size, true);
-	/*size_t i, j;
-	for (i = 2; i <= size; i <<= 1)
-		for (j = 0; j < size ; j += i)
-			merge(array, size, j, i);*/
+	if (array == NULL || size == 1)
+		return;
+	comparision_merge(array, size, 0, size, true);
 }
 /**/
 
@@ -118,7 +111,8 @@ void bitonic_sort(int *array, size_t size)
  */
 int main(void)
 {
-	int array[] = {100, 93, 40, 57, 14, 58, 85, 54, 31, 56, 46, 39, 15, 26, 78, 13};
+	int array[] = {100, 93, 40, 57, 14, 58, 85, 54,
+					31, 56, 46, 39, 15, 26, 78, 13};
 	size_t n = sizeof(array) / sizeof(array[0]);
 
 	print_array(array, n);
