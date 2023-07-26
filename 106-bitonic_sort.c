@@ -95,7 +95,7 @@ void comparision_merge(int *array, size_t size, size_t offset,
 /**/
 void bitonic_sort(int *array, size_t size)
 {
-	if (array == NULL || size == 1)
+	if (array == NULL || size < 2)
 		return;
 	comparision_merge(array, size, 0, size, true);
 }
